@@ -35,4 +35,8 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository }}:${{ steps.vars.outputs.VERSION }}
+          tags: ghcr.io/dolvladzio/app-2:${{ steps.vars.outputs.VERSION }}
+
+      - name: Check pushed image
+        run: |
+          docker manifest inspect ghcr.io/dolvladzio/app-2:${{ steps.vars.outputs.VERSION }}
