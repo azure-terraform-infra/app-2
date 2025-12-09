@@ -5,44 +5,9 @@ on:
       - 'v*'
   workflow_dispatch:
 
-env:
-  REGISTRY: "ghcr.io/dolvladzio"
-  APP_NAME: "app-2"
-
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract version
-        id: vars
-        run: |
-            echo "VERSION=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
-      
-      - name: Build and push image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          build-args: |
-            VERSION=${{ steps.vars.outputs.VERSION }}
-          tags: ${{ env.REGISTRY }}/${{ env.APP_NAME }}:${{ steps.vars.outputs.VERSION }}
-
-      - name: Check pushed image
-        run: |
-          docker manifest inspect ${{ env.REGISTRY }}/${{ env.APP_NAME }}:${{ steps.vars.outputs.VERSION }}
+  trigger-reusable-workflow:
+    uses: DolVladzio/release-rollback-repo/.github/workflows/build-images.yaml@main
+    with:
+      version: ${{ github.ref_name }}
+      app-name: ${{ github.event.repository.name }}
