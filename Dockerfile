@@ -20,6 +20,9 @@ RUN pip install --prefix=/install --no-cache-dir -r requirements.txt
 # ===========================
 FROM python:3.12-slim
 
+ARG VERSION
+ENV APP_VERSION=$VERSION
+
 WORKDIR /app
 
 # Copy installed packages from builder

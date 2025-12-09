@@ -39,6 +39,8 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
+          build-args: |
+            VERSION=${{ steps.vars.outputs.VERSION }}
           tags: ${{ env.REGISTRY }}/${{ env.APP_NAME }}:${{ steps.vars.outputs.VERSION }}
 
       - name: Check pushed image
