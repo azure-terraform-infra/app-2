@@ -12,6 +12,8 @@ permissions:
 jobs:
   trigger-reusable-workflow:
     uses: DolVladzio/release-rollback-repo/.github/workflows/build-images.yaml@main
+    secrets: inherit
     with:
       version: ${{ github.ref_name }}
       app-name: ${{ github.event.repository.name }}
+      # environment: ${{ github.event.client_payload.environment }}
