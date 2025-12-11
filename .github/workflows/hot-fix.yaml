@@ -1,4 +1,4 @@
-name: Hot Fix App-2
+name: Hot Fix App-2 Prod
 on:
   push:
     branches:

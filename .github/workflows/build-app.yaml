@@ -1,4 +1,4 @@
-name: Build App-2
+name: Build App-2 Prod
 on:
   push:
     tags:
